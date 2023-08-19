@@ -1,0 +1,26 @@
+# top-most EditorConfig file
+root = true
+
+# Java files
+[*.{java,gradle}]
+indent_style = space
+indent_size = 4
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# XML files
+[*.xml]
+indent_style = space
+indent_size = 4
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Properties files
+[*.properties]
+indent_style = space
+indent_size = 4
+charset = iso-8859-1
+trim_trailing_whitespace = true
+insert_final_newline = true
