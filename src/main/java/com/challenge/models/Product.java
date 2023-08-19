@@ -1,7 +1,13 @@
 package com.challenge.models;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"product_id", "value"})
 public class Product {
+
+    @JsonProperty("product_id")
     private int id;
     private double value;
 
