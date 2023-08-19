@@ -4,7 +4,7 @@ import org.junit.Test;
 
 public class ProductTest {
 
-        @Test
+    @Test
     public void testConstructor() {
         Product product = new Product(1, 10.0);
 
