@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.challenge.services.InputParserFactory.Format;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -16,8 +17,7 @@ public class TextToJsonConverterTest {
 
     @Before
     public void setUp() {
-        InputParserFactory parserFactory = new TextParserFactory();
-        InputParser parser = parserFactory.createParser();
+        InputParser parser = InputParserFactory.createParser(Format.TEXT);
 
         converter = new TextToJsonConverter(parser);
     }

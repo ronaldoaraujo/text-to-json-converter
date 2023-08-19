@@ -2,16 +2,14 @@ package com.challenge;
 
 import com.challenge.services.InputParser;
 import com.challenge.services.InputParserFactory;
-import com.challenge.services.TextParserFactory;
 import com.challenge.services.TextToJsonConverter;
+import com.challenge.services.InputParserFactory.Format;
 
 public class App
 {
     public static void main( String[] args )
     {
-
-        InputParserFactory parserFactory = new TextParserFactory();
-        InputParser parser = parserFactory.createParser();
+        InputParser parser = InputParserFactory.createParser(Format.TEXT);
 
         TextToJsonConverter converter = new TextToJsonConverter(parser);
 
