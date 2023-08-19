@@ -7,6 +7,7 @@ import com.challenge.models.JsonOutput;
 import com.challenge.models.User;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class TextToJsonConverter {
     private InputParser parser;
@@ -23,7 +24,7 @@ public class TextToJsonConverter {
     public String convertToJson(List<User> users) {
         JsonOutput jsonOutput = new JsonOutput(users);
         ObjectMapper mapper = new ObjectMapper();
-        mapper.findAndRegisterModules();
+        mapper.registerModule(new JavaTimeModule());
         String json = "";
 
         try {
