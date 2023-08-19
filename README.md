@@ -1,4 +1,5 @@
 # Text to JSON Converter
+![build](https://github.com/ronaldoaraujo/text-to-json-converter/actions/workflows/ci.yml/badge.svg)
 
 This is a simple Java application that converts text files to JSON format. It processes input files containing data in a specific format and converts them to JSON files.
 
@@ -12,7 +13,7 @@ This is a simple Java application that converts text files to JSON format. It pr
 1. Clone the repository:
 
 ```sh
-git clone https://github.com/yourusername/text-to-json-converter.git
+git clone https://github.com/ronaldoaraujo/text-to-json-converter.git
 cd text-to-json-converter
 ```
 
