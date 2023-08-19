@@ -1,8 +1,8 @@
 name: Java CI
 
 on:
-- push
-- pull_request
+  pull_request:
+    types: [ labeled, synchronize, opened, reopened ]
 
 jobs:
   build:
