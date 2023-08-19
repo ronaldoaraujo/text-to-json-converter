@@ -4,38 +4,28 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import com.challenge.models.Order;
-import com.challenge.models.User;
+import com.challenge.services.InputParserFactory.Format;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TextToJsonConverterTest {
+    private TextToJsonConverter converter;
 
-    @Test
-    public void testParseInputFile() {
-        TextToJsonConverter textToJsonConverter = new TextToJsonConverter();
-        String inputFilePath = "src/test/resources/data_1.txt";
+    @Before
+    public void setUp() {
+        InputParser parser = InputParserFactory.createParser(Format.TEXT);
 
-        List<User> users = textToJsonConverter.parseInputFile(inputFilePath);
-        User user = users.get(0);
-        Order order = user.getOrders().get(0);
-
-        assertEquals(100, users.size());
-        assertEquals(10, user.getOrders().size());
-        assertEquals(4, order.getProducts().size());
+        converter = new TextToJsonConverter(parser);
     }
 
     @Test
     public void testConvertToJson() throws IOException {
-        TextToJsonConverter textToJsonConverter = new TextToJsonConverter();
         String inputFilePath = "src/test/resources/data_1.txt";
-
-        List<User> users = textToJsonConverter.parseInputFile(inputFilePath);
-        String json = textToJsonConverter.convertToJson(users);
+        String json = converter.convertToJson(inputFilePath);
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readTree(json);
