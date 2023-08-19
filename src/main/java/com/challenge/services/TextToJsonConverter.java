@@ -14,6 +14,7 @@ import com.challenge.models.Product;
 import com.challenge.models.User;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class TextToJsonConverter {
     public List<User> parseInputFile(String inputFilePath) {

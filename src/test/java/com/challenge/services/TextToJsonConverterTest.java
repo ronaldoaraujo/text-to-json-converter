@@ -1,11 +1,17 @@
 package com.challenge.services;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.Test;
 
 import com.challenge.models.Order;
 import com.challenge.models.User;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TextToJsonConverterTest {
 
@@ -18,22 +24,24 @@ public class TextToJsonConverterTest {
         User user = users.get(0);
         Order order = user.getOrders().get(0);
 
-        assert users.size() == 100;
-        assert user.getOrders().size() == 10;
-        assert order.getProducts().size() == 4;
+        assertEquals(100, users.size());
+        assertEquals(10, user.getOrders().size());
+        assertEquals(4, order.getProducts().size());
     }
 
     @Test
-    public void testConvertToJson() {
+    public void testConvertToJson() throws IOException {
         TextToJsonConverter textToJsonConverter = new TextToJsonConverter();
         String inputFilePath = "src/test/resources/data_1.txt";
 
         List<User> users = textToJsonConverter.parseInputFile(inputFilePath);
-
         String json = textToJsonConverter.convertToJson(users);
 
-        System.out.println(json);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(json);
 
-        assert json.contains("users");
+        assertTrue(jsonNode.has("users"));
+        assertTrue(jsonNode.get("users").isArray());
+        assertEquals(100, jsonNode.get("users").size());
     }
 }
