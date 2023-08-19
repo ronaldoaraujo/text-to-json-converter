@@ -22,4 +22,18 @@ public class TextToJsonConverterTest {
         assert user.getOrders().size() == 10;
         assert order.getProducts().size() == 4;
     }
+
+    @Test
+    public void testConvertToJson() {
+        TextToJsonConverter textToJsonConverter = new TextToJsonConverter();
+        String inputFilePath = "src/test/resources/data_1.txt";
+
+        List<User> users = textToJsonConverter.parseInputFile(inputFilePath);
+
+        String json = textToJsonConverter.convertToJson(users);
+
+        System.out.println(json);
+
+        assert json.contains("users");
+    }
 }

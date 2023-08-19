@@ -3,7 +3,13 @@ package com.challenge.models;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"user_id", "name", "orders"})
 public class User {
+
+    @JsonProperty("user_id")
     private int id;
     private String name;
     private List<Order> orders;

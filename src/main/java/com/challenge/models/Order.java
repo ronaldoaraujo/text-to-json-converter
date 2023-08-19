@@ -4,8 +4,18 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.challenge.serializers.DoubleSerializer;
+
+@JsonPropertyOrder({"order_id", "total", "date", "products"})
 public class Order {
+
+    @JsonProperty("order_id")
     private int id;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private List<Product> products;
 
@@ -57,6 +67,8 @@ public class Order {
         return this;
     }
 
+    @JsonProperty("total")
+    @JsonSerialize(using = DoubleSerializer.class)
     public double getTotal() {
         double total = 0.0;
         for (Product product : products) {

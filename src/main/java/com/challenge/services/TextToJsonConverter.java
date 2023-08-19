@@ -8,9 +8,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.challenge.models.JsonOutput;
 import com.challenge.models.Order;
 import com.challenge.models.Product;
 import com.challenge.models.User;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TextToJsonConverter {
     public List<User> parseInputFile(String inputFilePath) {
@@ -55,4 +58,18 @@ public class TextToJsonConverter {
         return users;
     }
 
+    public String convertToJson(List<User> users) {
+        JsonOutput jsonOutput = new JsonOutput(users);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.findAndRegisterModules();
+        String json = "";
+
+        try {
+            json = mapper.writeValueAsString(jsonOutput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return json;
+    }
 }
