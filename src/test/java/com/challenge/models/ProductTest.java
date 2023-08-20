@@ -1,5 +1,8 @@
 package com.challenge.models;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import org.junit.Test;
 
 public class ProductTest {
@@ -8,8 +11,7 @@ public class ProductTest {
     public void testConstructor() {
         Product product = new Product(1, 10.0);
 
-        assert product.getId() == 1;
-        assert product.getValue() == 10.0;
+        assertEquals(10.0, product.getValue(), 0.0);
     }
 
     @Test
@@ -19,16 +21,21 @@ public class ProductTest {
         product.setId(1);
         product.setValue(10.0);
 
-        assert product.getId() == 1;
-        assert product.getValue() == 10.0;
+        assertEquals(1, product.getId());
+        assertEquals(10.0, product.getValue(), 0.0);
     }
 
     @Test
     public void testEquals() {
         Product product1 = new Product(1, 10.0);
         Product product2 = new Product(1, 10.0);
+        Product product3 = new Product(2, 11.0);
 
-        assert product1.equals(product2);
+        assertEquals(product1, product1);
+        assertEquals(product1, product2);
+        assertNotEquals(product1, product3);
+        assertNotEquals(product1, null);
+        assertNotEquals(product1, new Object());
     }
 
     @Test
@@ -36,6 +43,6 @@ public class ProductTest {
         Product product1 = new Product(1, 10.0);
         Product product2 = new Product(1, 10.0);
 
-        assert product1.hashCode() == product2.hashCode();
+        assertEquals(product1.hashCode(), product2.hashCode());
     }
 }

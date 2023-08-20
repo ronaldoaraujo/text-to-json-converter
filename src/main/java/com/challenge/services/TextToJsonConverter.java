@@ -21,7 +21,7 @@ public class TextToJsonConverter {
         return convertToJson(users);
     }
 
-    public String convertToJson(List<User> users) {
+    private String convertToJson(List<User> users) {
         JsonOutput jsonOutput = new JsonOutput(users);
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());

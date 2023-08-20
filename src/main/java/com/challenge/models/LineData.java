@@ -1,4 +1,5 @@
 package com.challenge.models;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -68,36 +69,6 @@ public class LineData {
 
     public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
-    }
-
-    public LineData userId(int userId) {
-        setUserId(userId);
-        return this;
-    }
-
-    public LineData userName(String userName) {
-        setUserName(userName);
-        return this;
-    }
-
-    public LineData orderId(int orderId) {
-        setOrderId(orderId);
-        return this;
-    }
-
-    public LineData productId(int productId) {
-        setProductId(productId);
-        return this;
-    }
-
-    public LineData productValue(double productValue) {
-        setProductValue(productValue);
-        return this;
-    }
-
-    public LineData orderDate(LocalDate orderDate) {
-        setOrderDate(orderDate);
-        return this;
     }
 
     @Override

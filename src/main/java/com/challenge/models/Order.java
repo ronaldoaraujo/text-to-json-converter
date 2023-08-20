@@ -52,21 +52,6 @@ public class Order {
         this.products = products;
     }
 
-    public Order id(int id) {
-        setId(id);
-        return this;
-    }
-
-    public Order date(LocalDate date) {
-        setDate(date);
-        return this;
-    }
-
-    public Order products(List<Product> products) {
-        setProducts(products);
-        return this;
-    }
-
     @JsonProperty("total")
     @JsonSerialize(using = DoubleSerializer.class)
     public double getTotal() {

@@ -47,21 +47,6 @@ public class User {
         this.orders = orders;
     }
 
-    public User id(int id) {
-        setId(id);
-        return this;
-    }
-
-    public User name(String name) {
-        setName(name);
-        return this;
-    }
-
-    public User orders(List<Order> orders) {
-        setOrders(orders);
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this)

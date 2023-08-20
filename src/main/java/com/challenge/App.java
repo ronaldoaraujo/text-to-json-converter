@@ -29,16 +29,16 @@ public class App
         processFiles(inputFile);
     }
 
-    private static void processFiles(File file) {
-        if (file.isDirectory()) {
-            File[] files = file.listFiles((dir, name) -> name.endsWith(".txt"));
+    private static void processFiles(File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory()) {
+            File[] files = fileOrDirectory.listFiles();
             if (files != null) {
-                for (File f : files) {
-                    processFiles(f);
+                for (File file : files) {
+                    processFiles(file);
                 }
             }
-        } else if (file.isFile()) {
-            processFile(file);
+        } else if (fileOrDirectory.isFile() && fileOrDirectory.getName().endsWith(".txt")) {
+            processFile(fileOrDirectory);
         }
     }
 

@@ -35,16 +35,6 @@ public class Product {
         this.value = value;
     }
 
-    public Product id(int id) {
-        setId(id);
-        return this;
-    }
-
-    public Product value(double value) {
-        setValue(value);
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this)

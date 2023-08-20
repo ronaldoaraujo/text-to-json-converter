@@ -1,5 +1,8 @@
 package com.challenge.models;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -10,9 +13,9 @@ public class UserTest {
     public void testConstructor() {
         User user = new User(1, "John Doe", new ArrayList<Order>());
 
-        assert user.getId() == 1;
-        assert user.getName() == "John Doe";
-        assert user.getOrders().size() == 0;
+        assertEquals(1, user.getId());
+        assertEquals("John Doe", user.getName());
+        assertEquals(0, user.getOrders().size());
     }
 
     @Test
@@ -23,9 +26,9 @@ public class UserTest {
         user.setName("John Doe");
         user.setOrders(new ArrayList<Order>());
 
-        assert user.getId() == 1;
-        assert user.getName() == "John Doe";
-        assert user.getOrders().size() == 0;
+        assertEquals(1, user.getId());
+        assertEquals("John Doe", user.getName());
+        assertEquals(0, user.getOrders().size());
     }
 
     @Test
@@ -35,15 +38,20 @@ public class UserTest {
 
         user.getOrders().add(order);
 
-        assert user.getOrders().size() == 1;
+        assertEquals(1, user.getOrders().size());
     }
 
     @Test
     public void testEquals() {
         User user1 = new User(1, "John Doe", new ArrayList<Order>());
         User user2 = new User(1, "John Doe", new ArrayList<Order>());
+        User user3 = new User(2, "Eric Estrada", new ArrayList<Order>());
 
-        assert user1.equals(user2);
+        assertEquals(user1, user1);
+        assertEquals(user1, user2);
+        assertNotEquals(user1, user3);
+        assertNotEquals(user1, null);
+        assertNotEquals(user1, new Object());
     }
 
     @Test
@@ -51,6 +59,6 @@ public class UserTest {
         User user1 = new User(1, "John Doe", new ArrayList<Order>());
         User user2 = new User(1, "John Doe", new ArrayList<Order>());
 
-        assert user1.hashCode() == user2.hashCode();
+        assertEquals(user1.hashCode(), user2.hashCode());
     }
 }
