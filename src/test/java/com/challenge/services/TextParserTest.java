@@ -3,6 +3,7 @@ package com.challenge.services;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,5 +73,19 @@ public class TextParserTest {
         Arrays.sort(actualProducts);
 
         assertArrayEquals(expectedProducts, actualProducts);
+    }
+
+    @Test
+    public void testOrderTotal() {
+        String inputFilePath = "src/test/resources/data_1.txt";
+
+        InputParser parser = new TextParser();
+        List<User> users = parser.parse(inputFilePath);
+        User user = users.stream().filter(u -> u.id().equals(70L)).findFirst().get();
+        Order order = user.orders().stream().filter(o -> o.id().equals(749L)).findFirst().get();
+
+        BigDecimal expectedTotal = new BigDecimal("3537.89");
+
+        assertEquals(expectedTotal, order.total());
     }
 }

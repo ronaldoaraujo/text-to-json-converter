@@ -12,7 +12,7 @@ public record Order(@JsonProperty("order_id") Long id,
                     List<Product> products) {
 
     @JsonProperty("total")
-    public BigDecimal getTotal() {
+    public BigDecimal total() {
         return products.stream()
                        .map(Product::value)
                        .reduce(BigDecimal.ZERO, BigDecimal::add);

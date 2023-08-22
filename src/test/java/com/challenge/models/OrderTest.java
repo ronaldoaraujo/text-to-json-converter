@@ -15,7 +15,7 @@ public class OrderTest {
         BigDecimal expectedTotal = BigDecimal.ZERO;
 
         Order order = new Order(null, null, products);
-        BigDecimal actualTotal = order.getTotal();
+        BigDecimal actualTotal = order.total();
 
         assertEquals(expectedTotal, actualTotal);
     }
@@ -29,7 +29,7 @@ public class OrderTest {
         BigDecimal expectedTotal = new BigDecimal("251.25");
 
         Order order = new Order(null, null, products);
-        BigDecimal actualTotal = order.getTotal();
+        BigDecimal actualTotal = order.total();
 
         assertEquals(expectedTotal, actualTotal);
     }
