@@ -5,7 +5,7 @@ This is a simple Java application that converts text files to JSON format. It pr
 
 ## Requirements
 
-- Java 8 or higher
+- Java 17 or higher
 - Maven (for building the project)
 
 ## Usage
@@ -46,22 +46,25 @@ Will generate a JSON file named `input.json` in the same directory with the foll
 
 ```json
 {
-  "user_id": 41,
-  "name": "Dr. Dexter Rolfson",
-  "orders": [
-    {
-      "order_id": 447,
-      "total": "1159.86",
-      "date": "2021-06-30",
-      "products": [
-        {
-          "product_id": 456,
-          "value": "1159.86"
-        }
-      ]
-    }
-  ]
+  "users": [{
+    "user_id": 41,
+    "name": "Dr. Dexter Rolfson",
+    "orders": [
+      {
+        "order_id": 447,
+        "total": "1159.86",
+        "date": "2021-06-30",
+        "products": [
+          {
+            "product_id": 456,
+            "value": "1159.86"
+          }
+        ]
+      }
+    ]
+  }]
 }
+
 ```
 
 ## Contributing
