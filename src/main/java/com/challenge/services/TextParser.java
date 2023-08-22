@@ -15,9 +15,8 @@ import com.challenge.models.User;
 public class TextParser extends AbstractParser implements InputParser {
 
     @Override
-    public List<User> parse(String filePath) {
+    public List<User> parse(String filePath) throws IOException {
         String line;
-        users = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             while ((line = reader.readLine()) != null) {
@@ -25,10 +24,10 @@ public class TextParser extends AbstractParser implements InputParser {
                 buildCollection(lineData);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Error while reading file: " + filePath);
         }
 
-        return users;
+        return new ArrayList<>(usersMap.values());
     }
 
     private LineData parseLine(String line) {

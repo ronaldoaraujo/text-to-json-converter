@@ -3,6 +3,7 @@ package com.challenge.services;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,7 @@ import com.challenge.models.User;
 
 public class TextParserTest {
     @Test
-    public void testParserUsersCount() {
+    public void testParserUsersCount() throws IOException {
         String inputFilePath = "src/test/resources/data_1.txt";
 
         InputParser parser = new TextParser();
@@ -24,7 +25,7 @@ public class TextParserTest {
     }
 
     @Test
-    public void testParserWithEmptyFile() {
+    public void testParserWithEmptyFile() throws IOException {
         String inputFilePath = "src/test/resources/empty.txt";
 
         InputParser parser = InputParserFactory.createParser(InputParserFactory.Format.TEXT);
@@ -34,7 +35,7 @@ public class TextParserTest {
     }
 
     @Test
-    public void testParserForEspecifiqUser() {
+    public void testParserForEspecifiqUser() throws IOException {
         String inputFilePath = "src/test/resources/data_1.txt";
 
         InputParser parser = new TextParser();
@@ -46,7 +47,7 @@ public class TextParserTest {
     }
 
     @Test
-    public void testOrdersForEspecifiqUser() {
+    public void testOrdersForEspecifiqUser() throws IOException {
         String inputFilePath = "src/test/resources/data_1.txt";
 
         InputParser parser = new TextParser();
@@ -60,7 +61,7 @@ public class TextParserTest {
     }
 
     @Test
-    public void testProductForEspecifiqOrder() {
+    public void testProductForEspecifiqOrder() throws IOException {
         String inputFilePath = "src/test/resources/data_1.txt";
 
         InputParser parser = new TextParser();
@@ -76,7 +77,7 @@ public class TextParserTest {
     }
 
     @Test
-    public void testOrderTotal() {
+    public void testOrderTotal() throws IOException {
         String inputFilePath = "src/test/resources/data_1.txt";
 
         InputParser parser = new TextParser();

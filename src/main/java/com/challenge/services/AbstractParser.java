@@ -1,7 +1,8 @@
 package com.challenge.services;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.challenge.models.LineData;
 import com.challenge.models.Order;
@@ -9,17 +10,17 @@ import com.challenge.models.Product;
 import com.challenge.models.User;
 
 public abstract class AbstractParser {
-    protected List<User> users;
+    protected Map<Long, User> usersMap = new HashMap<>();
 
     protected void buildCollection(LineData lineData) {
-        Order order = buildOrder(lineData);
+        User user = getUserOrCreate(lineData);
+        Order order = getOrderOrCreate(user, lineData);
         Product product = new Product(lineData.productId(), lineData.productValue());
+
         order.products().add(product);
     }
 
-    private Order buildOrder(LineData lineData) {
-        User user = buildUser(lineData);
-
+    private Order getOrderOrCreate(User user, LineData lineData) {
         return user.orders().stream()
                 .filter(o -> o.id().equals(lineData.orderId()))
                 .findFirst()
@@ -30,14 +31,9 @@ public abstract class AbstractParser {
                 });
     }
 
-    private User buildUser(LineData lineData) {
-        return users.stream()
-                .filter(u -> u.id().equals(lineData.userId()))
-                .findFirst()
-                .orElseGet(() -> {
-                    User newUser = new User(lineData.userId(), lineData.userName(), new ArrayList<>());
-                    users.add(newUser);
-                    return newUser;
-                });
+    private User getUserOrCreate(LineData lineData) {
+        return usersMap.computeIfAbsent(lineData.userId(), userId ->
+            new User(userId, lineData.userName(), new ArrayList<>())
+        );
     }
 }
