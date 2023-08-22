@@ -1,20 +1,20 @@
 package com.challenge.services;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
 
 public class InputParserFactoryTest {
 
     @Test
-    public void testCreateParser() {
+    public void testCreateTextParser() {
         InputParser parser = InputParserFactory.createParser(InputParserFactory.Format.TEXT);
-
-        assertTrue(parser instanceof TextParser);
+        assertEquals(TextParser.class, parser.getClass());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testCreateParserWithInvalidFormat() {
-        InputParserFactory.createParser(null);
+    public void testCreateParserWithUnsupportedFormat() {
+        InputParserFactory.createParser(mock(InputParserFactory.Format.class));
     }
 }
