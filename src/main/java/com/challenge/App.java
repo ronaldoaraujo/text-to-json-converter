@@ -1,59 +1,54 @@
 package com.challenge;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import com.challenge.services.InputParser;
 import com.challenge.services.InputParserFactory;
 import com.challenge.services.TextToJsonConverter;
 import com.challenge.services.InputParserFactory.Format;
 
+
 public class App
 {
+    private static final Logger LOGGER = Logger.getLogger(App.class.getName());
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println("Usage: java Application <file or directory path>");
-            System.exit(1);
-        }
+        if (args.length != 1)
+            throw new IllegalArgumentException("Usage: java App <file or directory path>");
 
-        String inputPath = args[0];
-        File inputFile = new File(inputPath);
+        Path path = Paths.get(args[0]);
 
-        if (!inputFile.exists()) {
-            System.err.println("File or directory not found: " + inputPath);
-            System.exit(1);
-        }
-
-        processFiles(inputFile);
+        if (!Files.exists(path))
+            LOGGER.log(Level.SEVERE, "File or directory not found: {0}", args[0]);
+        else
+            processFiles(path);
     }
 
-    private static void processFiles(File fileOrDirectory) {
-        if (fileOrDirectory.isDirectory()) {
-            File[] files = fileOrDirectory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    processFiles(file);
-                }
-            }
-        } else if (fileOrDirectory.isFile() && fileOrDirectory.getName().endsWith(".txt")) {
-            processFile(fileOrDirectory);
+    private static void processFiles(Path path) {
+        try (Stream<Path> paths = Files.walk(path)) {
+            paths.filter(p -> Files.isRegularFile(p) && p.toString().endsWith(".txt"))
+                    .forEach(App::processFile);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "An IOException occurred while processing files:", e);
         }
     }
 
-    private static void processFile(File file) {
-        String filePath = file.getPath();
+    private static void processFile(Path file) {
         InputParser parser = InputParserFactory.createParser(Format.TEXT);
 
         try {
             TextToJsonConverter converter = new TextToJsonConverter(parser);
-            String json = converter.convertToJson(filePath);
+            String json = converter.convertToJson(file.toString());
 
-            String outputPath = filePath.replace(".txt", ".json");
-            Files.write(Paths.get(outputPath), json.getBytes());
+            Path outputPath = Paths.get(file.toString().replace(".txt", ".json"));
+            Files.write(outputPath, json.getBytes());
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "An IOException occurred while processing files:", e);
         }
     }
 }

@@ -1,84 +1,36 @@
 package com.challenge.models;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class OrderTest {
-        private LocalDate currentDate;
+    @Test
+    public void testGetTotalWithEmptyProducts() {
+        List<Product> products = Arrays.asList();
+        BigDecimal expectedTotal = BigDecimal.ZERO;
 
-        @Before
-        public void setUp() {
-            currentDate = LocalDate.now();
-        }
+        Order order = new Order(null, null, products);
+        BigDecimal actualTotal = order.total();
 
-        @Test
-        public void testConstructor() {
-            Order order = new Order(1, currentDate, new ArrayList<Product>());
+        assertEquals(expectedTotal, actualTotal);
+    }
 
-            assertEquals(1, order.getId());
-            assertEquals(currentDate, order.getDate());
-            assertEquals(0, order.getProducts().size());
-        }
+    @Test
+    public void testGetTotalWithMultipleProducts() {
+        List<Product> products = Arrays.asList(
+            new Product(1L, new BigDecimal("100.50")),
+            new Product(2L, new BigDecimal("150.75"))
+        );
+        BigDecimal expectedTotal = new BigDecimal("251.25");
 
-        @Test
-        public void testGettersAndSetters() {
-            Order order = new Order();
+        Order order = new Order(null, null, products);
+        BigDecimal actualTotal = order.total();
 
-            order.setId(1);
-            order.setDate(currentDate);
-            order.setProducts(new ArrayList<Product>());
-
-            assertEquals(1, order.getId());
-            assertEquals(currentDate, order.getDate());
-            assertEquals(0, order.getProducts().size());
-        }
-
-        @Test
-         public void testProductsAdd() {
-            Order order = new Order(1, currentDate, new ArrayList<Product>());
-            Product product = new Product(1, 10.0);
-
-            order.getProducts().add(product);
-
-            assertEquals(1, order.getProducts().size());
-         }
-
-         @Test
-         public void testGetTotal() {
-            Order order = new Order(1, currentDate, new ArrayList<Product>());
-            Product product1 = new Product(1, 10.0);
-            Product product2 = new Product(2, 20.0);
-
-            order.getProducts().add(product1);
-            order.getProducts().add(product2);
-
-            assertEquals(30.0, order.getTotal(), 0.0);
-         }
-
-        @Test
-        public void testEquals() {
-            Order order1 = new Order(1, currentDate, new ArrayList<Product>());
-            Order order2 = new Order(1, currentDate, new ArrayList<Product>());
-            Order order3 = new Order(2, currentDate, new ArrayList<Product>());
-
-            assertEquals(order1, order1);
-            assertEquals(order1, order2);
-            assertNotEquals(order1, order3);
-            assertNotEquals(order1, null);
-            assertNotEquals(order1, new Object());
-        }
-
-        @Test
-        public void testHashCode() {
-            Order order1 = new Order(1, currentDate, new ArrayList<Product>());
-            Order order2 = new Order(1, currentDate, new ArrayList<Product>());
-
-            assertEquals(order1.hashCode(), order2.hashCode());
-        }
+        assertEquals(expectedTotal, actualTotal);
+    }
 }

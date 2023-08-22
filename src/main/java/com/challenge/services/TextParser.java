@@ -3,6 +3,7 @@ package com.challenge.services;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,9 +15,8 @@ import com.challenge.models.User;
 public class TextParser extends AbstractParser implements InputParser {
 
     @Override
-    public List<User> parse(String filePath) {
+    public List<User> parse(String filePath) throws IOException {
         String line;
-        users = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             while ((line = reader.readLine()) != null) {
@@ -24,20 +24,20 @@ public class TextParser extends AbstractParser implements InputParser {
                 buildCollection(lineData);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Error while reading file: " + filePath);
         }
 
-        return users;
+        return new ArrayList<>(usersMap.values());
     }
 
     private LineData parseLine(String line) {
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-        int userId = Integer.parseInt(line.substring(0, 10));
+        Long userId = Long.parseLong(line.substring(0, 10));
         String userName = line.substring(10, 55).trim();
-        int orderId = Integer.parseInt(line.substring(55, 65));
-        int productId = Integer.parseInt(line.substring(65, 75));
-        double productValue = Double.parseDouble(line.substring(75, 87).trim());
+        Long orderId = Long.parseLong(line.substring(55, 65));
+        Long productId = Long.parseLong(line.substring(65, 75));
+        BigDecimal productValue = new BigDecimal(line.substring(75, 87).trim());
         LocalDate orderDate = LocalDate.parse(line.substring(87, 95).trim(), inputFormatter);
 
         return new LineData(userId, userName, orderId, productId, productValue, orderDate);

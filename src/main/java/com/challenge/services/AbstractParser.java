@@ -1,7 +1,8 @@
 package com.challenge.services;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.challenge.models.LineData;
 import com.challenge.models.Order;
@@ -9,35 +10,30 @@ import com.challenge.models.Product;
 import com.challenge.models.User;
 
 public abstract class AbstractParser {
-    protected List<User> users;
+    protected Map<Long, User> usersMap = new HashMap<>();
 
     protected void buildCollection(LineData lineData) {
-        Order order = buildOrder(lineData);
-        Product product = new Product(lineData.getProductId(), lineData.getProductValue());
-        order.getProducts().add(product);
+        User user = getUserOrCreate(lineData);
+        Order order = getOrderOrCreate(user, lineData);
+        Product product = new Product(lineData.productId(), lineData.productValue());
+
+        order.products().add(product);
     }
 
-    private Order buildOrder(LineData lineData) {
-        User user = buildUser(lineData);
-
-        return user.getOrders().stream()
-                .filter(o -> o.getId() == lineData.getOrderId())
+    private Order getOrderOrCreate(User user, LineData lineData) {
+        return user.orders().stream()
+                .filter(o -> o.id().equals(lineData.orderId()))
                 .findFirst()
                 .orElseGet(() -> {
-                    Order newOrder = new Order(lineData.getOrderId(), lineData.getOrderDate(), new ArrayList<>());
-                    user.getOrders().add(newOrder);
+                    Order newOrder = new Order(lineData.orderId(), lineData.orderDate(), new ArrayList<>());
+                    user.orders().add(newOrder);
                     return newOrder;
                 });
     }
 
-    private User buildUser(LineData lineData) {
-        return users.stream()
-                .filter(u -> u.getId() == lineData.getUserId())
-                .findFirst()
-                .orElseGet(() -> {
-                    User newUser = new User(lineData.getUserId(), lineData.getUserName(), new ArrayList<>());
-                    users.add(newUser);
-                    return newUser;
-                });
+    private User getUserOrCreate(LineData lineData) {
+        return usersMap.computeIfAbsent(lineData.userId(), userId ->
+            new User(userId, lineData.userName(), new ArrayList<>())
+        );
     }
 }
